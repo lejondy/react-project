@@ -1,14 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import  './index.css';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import './index.css';
 import App from './App';
-import {BrowserRouter} from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
+import counterReducer from './store/reducers/couter';
+import resultReducer from './store/reducer/results';
 
-const app = (
-	<BrowserRouter>
-	<App/>
-	</BrowserRouter>
-);
-ReactDOM.render(app, document.getElementById('root'));
+
+const rootReducer = combineReducers({
+    ctr: counterReducer,
+    res: resultReducer
+});
+
+const store = createStore(rootReducer);
+
+ReactDOM.render(
+	<Provider store={store}>
+	<App />
+	</Provider>
+	, document.getElementById('root'));
 registerServiceWorker();
